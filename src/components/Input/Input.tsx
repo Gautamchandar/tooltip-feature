@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type InputHTMLAttributes } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/libs/utils";
 
@@ -33,7 +33,7 @@ const inputVariants = cva(
 );
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "disabled" | "size">,
     VariantProps<typeof inputVariants> {
   label?: string;
   hint?: string;
@@ -75,7 +75,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           id={inputId}
           ref={ref}
           className={cn(inputVariants({ size, tone, disabled }), className)}
-          disabled={disabled}
+          disabled={disabled ?? undefined}
           {...props}
         />
         {error ? (
